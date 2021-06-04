@@ -1,7 +1,7 @@
 import os
 import cv2
 import numpy as np
-from tqdm import tqdm
+# from tqdm import tqdm
 import argparse
 import fileinput
 
@@ -51,7 +51,7 @@ for DIR in DIRS:
                 # Step into Label folder where annotations are generated
                 os.chdir("Label")
 
-                for filename in tqdm(os.listdir(os.getcwd())):
+                for filename in os.listdir(os.getcwd()):
                     filename_str = str.split(filename, ".")[0]
                     if filename.endswith(".txt"):
                         annotations = []
@@ -60,9 +60,9 @@ for DIR in DIRS:
                                 for class_type in classes:
                                     line = line.replace(class_type, str(classes.get(class_type)))
                                 labels = line.split()
-                                coords = np.asarray([float(labels[1]), float(labels[2]), float(labels[3]), float(labels[4])])
+                                coords = np.asarray(labels[-4:],dtype=float)
                                 coords = convert(filename_str, coords)
-                                labels[1], labels[2], labels[3], labels[4] = coords[0], coords[1], coords[2], coords[3]
+                                labels[-4:]=coords
                                 newline = str(labels[0]) + " " + str(labels[1]) + " " + str(labels[2]) + " " + str(labels[3]) + " " + str(labels[4])
                                 line = line.replace(line, newline)
                                 annotations.append(line)
