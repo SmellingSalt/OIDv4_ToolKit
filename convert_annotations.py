@@ -1,7 +1,7 @@
 import os
 import cv2
 import numpy as np
-# from tqdm import tqdm
+from tqdm import tqdm
 import argparse
 import fileinput
 
@@ -51,7 +51,7 @@ for DIR in DIRS:
                 # Step into Label folder where annotations are generated
                 os.chdir("Label")
 
-                for filename in os.listdir(os.getcwd()):
+                for filename in tqdm(os.listdir(os.getcwd())):
                     filename_str = str.split(filename, ".")[0]
                     if filename.endswith(".txt"):
                         annotations = []
